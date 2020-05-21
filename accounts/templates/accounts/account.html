@@ -1,0 +1,38 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+<style>
+    .profile-pic{
+        max-width: 200px;
+        max-height: 200px;
+        margin: 0 auto;
+        border-radius: 50%;
+    }
+</style>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card card-body">
+                <a class="btn btn-warning" href="{% url 'home' %}">Back to profile</a>
+                <hr>
+                <h4 style="text-align: center;">Account settings</h4>
+                <hr>
+                <img class="profile-pic" src="{{ user.customer.profile.url }}" alt="">
+            </div>            
+        </div>
+
+        <div class="col-md-9">
+            <div class="card card-body">
+                <form method="POST" action="" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    {{ customer_form.as_p }}
+                    <input class="btn btn-primary" type="submit" value="Submit">
+                </form>
+            </div>
+        </div>
+
+    </div>
+    
+
+{% endblock %}

@@ -1,0 +1,82 @@
+{% extends 'accounts/base.html' %}
+
+{% block content %}
+
+<div class="row">
+    <div class="col-md-4">
+        <div class="card card-body">
+            <h4>Customer:</h4>
+            <hr>
+            <a class="btn btn-outline-info mb-2" href="">Update customer</a>
+            <a class="btn btn-outline-info mb-2" href="{% url 'create_order' customer.id %}">Place order</a>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card card-body">
+            <h4>Contact information</h4>
+            <hr>
+            <h4>Email: {{ customer.email }}</h4>
+            <h4>Phone: {{ customer.phone }}</h4>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card card-body">
+            <h4>Total orders</h4>
+            <hr>
+            <h4>{{ customer_total_orders }}</h4>
+        </div>
+    </div>
+</div>
+
+<br>    
+
+<div class="row">
+    <div class="col">
+        <div class="card card-body">
+            <form method="GET">
+                {{ order_filter.form }}
+                <button class="btn btn-primary" type="submit">Search</button>
+            </form>            
+        </div>
+    </div>
+</div>
+
+<br>
+
+<div class="row">
+    <div class="col">
+        <div class="card card-body">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th scope="col">Product</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Note</th>
+                        <th scope="col">Date Ordered</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Update</th>
+                        <th scope="col">Remove</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in customer_orders %}
+                        <tr>
+                            <td>{{ order.product }}</td>
+                            <td>{{ order.product.category }}</td>
+                            <td>{{ order.note }}</td>
+                            <td>{{ order.date_ordered }}</td>
+                            <td>{{ order.status }}</td>
+                            <td><a class="btn btn-sm btn-info" href="{% url 'update_order' order.id %}">Update</a></td>
+                            <td><a class="btn btn-sm btn-danger" href="{% url 'delete_order' order.id %}">Delete</a></td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+
